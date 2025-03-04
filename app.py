@@ -90,6 +90,17 @@ def criar_cliente():
                 conn.close()
     return render_template('cadastro_clientes.html', form=form)
 
+# Rota para listar todos os clientes cadastrados
+@app.route('/clientes')
+def listar_clientes():
+    conn = get_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT id, nome, email, telefone, endereco FROM clientes")
+    clientes = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template('clientes.html', clientes=clientes)
+
 # Rota de Logout
 @app.route('/logout')
 def logout():
