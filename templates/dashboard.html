@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h2>Bem-vindo, {{ session['user_name'] }}!</h2>
+    <a href="{{ url_for('logout') }}">Sair</a>
+  </body>
+</html>

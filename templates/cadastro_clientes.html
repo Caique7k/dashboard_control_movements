@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Cadastro de Clientes</title>
+  </head>
+  <body>
+    <h2>Cadastro de Clientes</h2>
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <p>{{ form.nome.label }} {{ form.nome() }}</p>
+      <p>{{ form.email.label }} {{ form.email() }}</p>
+      <p>{{ form.telefone.label }} {{ form.telefone() }}</p>
+      <p>{{ form.endereco.label }} {{ form.endereco() }}</p>
+      <p>{{ form.submit() }}</p>
+    </form>
+  </body>
+</html>
