@@ -3,40 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lista de Clientes</title>
+    <title>Lista de Produtos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body class="bg-gray-100 text-gray-900">
     <div class="container mx-auto p-6">
-      <h1 class="text-3xl font-bold mb-4">Lista de Clientes</h1>
+      <h1 class="text-3xl font-bold mb-4">Lista de Produtos</h1>
       <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead class="bg-blue-500 text-white">
           <tr>
             <th class="py-2 px-4">Nome</th>
-            <th class="py-2 px-4">Email</th>
-            <th class="py-2 px-4">Telefone</th>
-            <th class="py-2 px-4">Endereço</th>
+            <th class="py-2 px-4">Descrição</th>
+            <th class="py-2 px-4">Quantidade</th>
+            <th class="py-2 px-4">Preco</th>
             <th class="py-2 px-4">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {% for cliente in clientes %}
+          {% for produto in produtos %}
           <tr class="border-b">
-            <td class="py-2 px-4">{{ cliente.nome }}</td>
-            <td class="py-2 px-4">{{ cliente.email }}</td>
-            <td class="py-2 px-4">{{ cliente.telefone }}</td>
-            <td class="py-2 px-4">{{ cliente.endereco }}</td>
+            <td class="py-2 px-4">{{ produto.nome }}</td>
+            <td class="py-2 px-4">{{ produto.descricao }}</td>
+            <td class="py-2 px-4">{{ produto.quantidade_estoque }}</td>
+            <td class="py-2 px-4">{{ produto.preco }}</td>
             <td class="py-2 px-4 flex space-x-2">
               <button
                 class="bg-yellow-500 text-white py-1 px-3 rounded"
-                onclick="abrirModalEdicao('{{ cliente.id }}', '{{ cliente.nome }}', '{{ cliente.email }}', '{{ cliente.telefone }}', '{{ cliente.endereco }}')"
+                onclick="abrirModalEdicao('{{ produto.id }}', '{{ produto.nome }}', '{{ produto.descricao }}', '{{ produto.preco }}', '{{ produto.quantidade_estoque }}')"
               >
                 Editar
               </button>
               <button
                 class="bg-red-500 text-white py-1 px-3 rounded"
-                onclick="confirmarExclusao('{{ cliente.id }}')"
+                onclick="confirmarExclusao('{{ produto.id }}')"
               >
                 Excluir
               </button>
@@ -58,41 +58,41 @@
       class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
     >
       <div class="bg-white p-6 rounded shadow-lg w-96">
-        <h2 class="text-xl font-bold mb-4">Editar Cliente</h2>
+        <h2 class="text-xl font-bold mb-4">Editar Produto</h2>
         <form id="formEdicao">
-          <input type="hidden" id="cliente_id" />
+          <input type="hidden" id="produto_id" />
           <div class="mb-2">
             <label class="block">Nome</label>
             <input
               type="text"
-              id="cliente_nome"
+              id="produto_nome"
               class="w-full p-2 border rounded"
               required
             />
           </div>
           <div class="mb-2">
-            <label class="block">Email</label>
-            <input
-              type="email"
-              id="cliente_email"
-              class="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div class="mb-2">
-            <label class="block">Telefone</label>
+            <label class="block">Descrição</label>
             <input
               type="text"
-              id="cliente_telefone"
+              id="produto_descricao"
               class="w-full p-2 border rounded"
               required
             />
           </div>
           <div class="mb-2">
-            <label class="block">Endereço</label>
+            <label class="block">Preço</label>
             <input
               type="text"
-              id="cliente_endereco"
+              id="produto_preco"
+              class="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div class="mb-2">
+            <label class="block">Quantidade</label>
+            <input
+              type="text"
+              id="produto_quantidade"
               class="w-full p-2 border rounded"
               required
             />
@@ -118,12 +118,12 @@
 
     <script>
       // Função para abrir o modal de edição
-      function abrirModalEdicao(id, nome, email, telefone, endereco) {
-        document.getElementById("cliente_id").value = id;
-        document.getElementById("cliente_nome").value = nome;
-        document.getElementById("cliente_email").value = email;
-        document.getElementById("cliente_telefone").value = telefone;
-        document.getElementById("cliente_endereco").value = endereco;
+      function abrirModalEdicao(id, nome, descricao, preco, quantidade) {
+        document.getElementById("produto_id").value = id;
+        document.getElementById("produto_nome").value = nome;
+        document.getElementById("produto_descricao").value = descricao;
+        document.getElementById("produto_preco").value = preco;
+        document.getElementById("produto_quantidade").value = quantidade;
         document.getElementById("modalEdicao").classList.remove("hidden");
       }
 
@@ -137,33 +137,33 @@
         .getElementById("formEdicao")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-          let id = document.getElementById("cliente_id").value;
+          let id = document.getElementById("produto_id").value;
           let formData = new FormData();
           formData.append(
-            "cliente_nome",
-            document.getElementById("cliente_nome").value
+            "produto_nome",
+            document.getElementById("produto_nome").value
           );
           formData.append(
-            "cliente_email",
-            document.getElementById("cliente_email").value
+            "produto_descricao",
+            document.getElementById("produto_descricao").value
           );
           formData.append(
-            "cliente_telefone",
-            document.getElementById("cliente_telefone").value
+            "produto_quantidade",
+            document.getElementById("produto_quantidade").value
           );
           formData.append(
-            "cliente_endereco",
-            document.getElementById("cliente_endereco").value
+            "produto_preco",
+            document.getElementById("produto_preco").value
           );
 
-          fetch(`/clientes/editar/${id}`, {
-            method: "POST",
+          fetch(`/produtos/editar/${id}`, {
+            method: "PUT",
             body: formData,
           }).then((response) => {
             if (response.ok) {
               Swal.fire(
                 "Sucesso!",
-                "Cliente atualizado com sucesso.",
+                "Produto atualizado com sucesso.",
                 "success"
               ).then(() => {
                 fecharModal(); // Fecha o modal após editar
@@ -171,9 +171,9 @@
               });
             } else {
               Swal.fire(
-                console.log(response),
+                response.statusText,
                 "Erro!",
-                "Não foi possível atualizar o cliente.",
+                "Não foi possível atualizar o produto.",
                 "error"
               );
             }
@@ -192,12 +192,12 @@
           confirmButtonText: "Sim, excluir!",
         }).then((result) => {
           if (result.isConfirmed) {
-            fetch(`/clientes/excluir/${id}`, { method: "POST" }).then(
+            fetch(`/produtos/excluir/${id}`, { method: "DELETE" }).then(
               (response) => {
                 if (response.ok) {
                   Swal.fire(
                     "Excluído!",
-                    "O cliente foi removido.",
+                    "O produto foi removido.",
                     "success"
                   ).then(() => {
                     location.reload();
@@ -205,7 +205,7 @@
                 } else {
                   Swal.fire(
                     "Erro!",
-                    "Não foi possível excluir o cliente.",
+                    "Não foi possível excluir o produto.",
                     "error"
                   );
                 }

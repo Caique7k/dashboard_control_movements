@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from wtforms.validators import DataRequired, Email, Length, EqualTo, NumberRange
 
 class RegisterForm(FlaskForm):
     nome = StringField('Nome', validators=[DataRequired(), Length(min=3, max=100)])
@@ -19,4 +19,11 @@ class ClienteForm(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(), Email()])
     telefone = StringField('Telefone', validators=[DataRequired(), Length(min=8, max=20)])
     endereco = StringField('Endereço', validators=[DataRequired(), Length(min=3, max=200)])
+    submit = SubmitField('Cadastrar')
+
+class ProdutoForm(FlaskForm):
+    nome = StringField('Nome', validators=[DataRequired(), Length(min=3, max=100)])
+    descricao = StringField('Descrição', validators=[DataRequired(), Length(min=3, max=200)])
+    quantidade = StringField('Quantidade', validators=[DataRequired()])
+    valor = StringField('Valor', validators=[DataRequired()])
     submit = SubmitField('Cadastrar')
